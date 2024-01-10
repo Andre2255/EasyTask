@@ -1,6 +1,8 @@
-function Header (){
-    return(
-        <div> Header </div>
+function Header() {
+    return (
+        <>
+            <h1 className=" font-black text-5xl text-center md:w-2/3 mx-auto">Listado De <span className=" text-orange-600"> Tareas</span></h1>
+        </>
     )
 }
 
