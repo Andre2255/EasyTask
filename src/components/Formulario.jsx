@@ -1,37 +1,59 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 
-const Formulario = () => {
+const Formulario = ({setTareas}) => {
+  const [nombre, setNombre] = useState("")
+  const [creador, setCreador] = useState("")
+  const [email, setEmail] = useState("")
+  const [fecha, setFecha] = useState("")
+  const [detalle, setDetalle] = useState("")
+
+  const [error, setError] = useState(false)
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    //validando si hay campos vacios en el formulario
+    if ([nombre, creador, email, fecha, detalle].includes(''))
+    {
+      setError(true)
+      return
+    }
+    setError(false)
+    setTareas(nombre)
+  }
+  
+
   return (
-    <div className=' md:w-1/2 lg:w-2/5'>
+    <div className=' md:w-1/2 lg:w-2/5 mx-5'>
       <h2 className=' font-black text-3xl text-center'>Nueva Tarea</h2>
 
 
       <p className=' text-lg mt-5 text-center mb-10'>Añade tareas y<span className=' text-orange-600 font-bold'> Administralas</span></p>
 
-      <form className=' bg-white shadow-md rounded-lg py-10 px-5 mb-10'>
+      <form onSubmit={handleSubmit} className=' bg-white shadow-md rounded-lg py-10 px-5 mb-10'>
+        {error && <div className=' bg-red-600 text-white text-center p-3 uppercase font-bold mb-3 rounded'><p>Todos los campos son obligatiorios</p></div>}
         <div className=' mb-5'>
           <label className=' block text-gray-700 uppercase font-bold' htmlFor="Nombre de la tarea">Nombre de la tarea</label>
-          <input className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Nombre de la tarea' type="text" placeholder='Nombre de la tarea' />
+          <input className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Nombre de la tarea' type="text" placeholder='Nombre de la tarea' onChange={(e) => setNombre(e.target.value)} value={nombre} />
         </div>
 
         <div className=' mb-5'>
           <label className=' block text-gray-700 uppercase font-bold' htmlFor="Nombre del credor">Creador</label>
-          <input className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Nombre del credor' type="text" placeholder='Nombre del creador' />
+          <input className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Nombre del credor' type="text" placeholder='Nombre del creador' onChange={(e) => setCreador(e.target.value)} value={creador} />
         </div>
 
         <div className=' mb-5'>
           <label className=' block text-gray-700 uppercase font-bold' htmlFor="Email">Email</label>
-          <input className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Email' type="Email" placeholder='Email' />
+          <input className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Email' type="Email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email} />
         </div>
 
         <div className=' mb-5'>
           <label className=' block text-gray-700 uppercase font-bold' htmlFor="Fecha de creacion">Fecha de creacion</label>
-          <input className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Fecha de creacion' type="date" />
+          <input className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Fecha de creacion' type="date" onChange={(e) => setFecha(e.target.value)} value={fecha} />
         </div>
 
         <div className=' mb-5'>
           <label className=' block text-gray-700 uppercase font-bold' htmlFor="Detalle">Detalle</label>
-          <textarea className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Detalle' type="Text" placeholder='Detalle de la tarea'/>
+          <textarea className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Detalle' type="Text" placeholder='Detalle de la tarea' onChange={(e) => setDetalle(e.target.value)} value={detalle} />
         </div>
 
         <input type="submit" className=' bg-orange-600 w-full p-3 text-white uppercase font-bold hover:bg-orange-700 transition-all' value={"Agregar Tarea"} />
