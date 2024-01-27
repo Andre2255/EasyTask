@@ -29,7 +29,7 @@ const Task = ({ tarea, setTarea, eliminarTarea }) => {
             </p>
 
             <div className="flex flex-col  md:flex-row justify-between mt-10  ">
-                <button className="mb-4 md:mb-0 py-2 md:py-2 px-6 md:px-8 lg:px-10 bg-orange-600 text-white hover:bg-orange-700 font-bold uppercase rounded w-full md:w-auto">Editar</button>
+                <button className="mb-4 md:mb-0 py-2 md:py-2 px-6 md:px-8 lg:px-10 bg-orange-600 text-white hover:bg-orange-700 font-bold uppercase rounded w-full md:w-auto" onClick={() => setTarea(tarea)} type="button" >Editar</button>
                 <button className="py-2 md:py-2 px-6 md:px-8 lg:px-10 bg-red-600 text-white hover:bg-red-700 font-bold uppercase rounded w-full md:w-auto" onClick={handleEliminar} type="button">Eliminar</button>
             </div>
 

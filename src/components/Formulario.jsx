@@ -43,12 +43,14 @@ const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
 
     if (tarea.id) {
       //edit task
+      console.log(tarea)
       objectTarea.id = tarea.id
       const tareaActualizada = tareas.map(tareaState => tareaState.id === tarea.id ? objectTarea : tareaState)
       setTareas(tareaActualizada);
       setTarea({})
     } else {
       //add the object
+      console.log(tarea)
       objectTarea.id = generarId()
       setTareas([...tareas, objectTarea])
     }
