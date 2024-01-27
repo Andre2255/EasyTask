@@ -12,7 +12,7 @@ function App() {
     <div className=" container mx-auto mt-20">
       <Header />
       <div className=" mt-12 md:flex p-10">
-        <Fomulario setTareas={setTareas}/>
+        <Fomulario tareas={tareas} setTareas={setTareas} />
         <TaskList />
       </div>
 

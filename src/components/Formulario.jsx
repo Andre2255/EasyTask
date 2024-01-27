@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
+import Error from './Error'
 
-const Formulario = ({setTareas}) => {
+const Formulario = ({tareas, setTareas}) => {
   const [nombre, setNombre] = useState("")
   const [creador, setCreador] = useState("")
   const [email, setEmail] = useState("")
@@ -18,7 +19,20 @@ const Formulario = ({setTareas}) => {
       return
     }
     setError(false)
-    setTareas(nombre)
+
+    //task object
+    const objectTarea = {
+      nombre, creador, email, fecha, detalle
+    }
+    //add the object
+    setTareas([...tareas, objectTarea])
+
+    //reset all values from form
+    setNombre('')
+    setCreador('')
+    setEmail('')
+    setFecha('')
+    setDetalle('')
   }
   
 
@@ -30,7 +44,7 @@ const Formulario = ({setTareas}) => {
       <p className=' text-lg mt-5 text-center mb-10'>Añade tareas y<span className=' text-orange-600 font-bold'> Administralas</span></p>
 
       <form onSubmit={handleSubmit} className=' bg-white shadow-md rounded-lg py-10 px-5 mb-10'>
-        {error && <div className=' bg-red-600 text-white text-center p-3 uppercase font-bold mb-3 rounded'><p>Todos los campos son obligatiorios</p></div>}
+        {error && <Error>Todos los campos son obligatiorios</Error>}
         <div className=' mb-5'>
           <label className=' block text-gray-700 uppercase font-bold' htmlFor="Nombre de la tarea">Nombre de la tarea</label>
           <input className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Nombre de la tarea' type="text" placeholder='Nombre de la tarea' onChange={(e) => setNombre(e.target.value)} value={nombre} />
