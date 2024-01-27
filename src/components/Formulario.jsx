@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Error from './Error'
 
-const Formulario = ({tareas, setTareas}) => {
+const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
   const [nombre, setNombre] = useState("")
   const [creador, setCreador] = useState("")
   const [email, setEmail] = useState("")
@@ -9,12 +9,28 @@ const Formulario = ({tareas, setTareas}) => {
   const [detalle, setDetalle] = useState("")
 
   const [error, setError] = useState(false)
+
+  useEffect(() => {
+    if (Object.keys(tarea).length > 0) {
+      setNombre(tarea.nombre)
+      setCreador(tarea.creador)
+      setEmail(tarea.email)
+      setFecha(tarea.fecha)
+      setDetalle(tarea.detalle)
+    }
+  }, [tarea])
+
+  const generarId = () => {
+    const random = Math.random().toString(36).substring(2)
+    const fecha = Date.now().toString(36)
+    return random + fecha
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
     //validando si hay campos vacios en el formulario
-    if ([nombre, creador, email, fecha, detalle].includes(''))
-    {
+    if ([nombre, creador, email, fecha, detalle].includes('')) {
       setError(true)
       return
     }
@@ -24,8 +40,19 @@ const Formulario = ({tareas, setTareas}) => {
     const objectTarea = {
       nombre, creador, email, fecha, detalle
     }
-    //add the object
-    setTareas([...tareas, objectTarea])
+
+    if (tarea.id) {
+      //edit task
+      objectTarea.id = tarea.id
+      const tareaActualizada = tareas.map(tareaState => tareaState.id === tarea.id ? objectTarea : tareaState)
+      setTareas(tareaActualizada);
+      setTarea({})
+    } else {
+      //add the object
+      objectTarea.id = generarId()
+      setTareas([...tareas, objectTarea])
+    }
+
 
     //reset all values from form
     setNombre('')
@@ -34,7 +61,7 @@ const Formulario = ({tareas, setTareas}) => {
     setFecha('')
     setDetalle('')
   }
-  
+
 
   return (
     <div className=' md:w-1/2 lg:w-2/5 mx-5'>
@@ -70,7 +97,7 @@ const Formulario = ({tareas, setTareas}) => {
           <textarea className=' border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' id='Detalle' type="Text" placeholder='Detalle de la tarea' onChange={(e) => setDetalle(e.target.value)} value={detalle} />
         </div>
 
-        <input type="submit" className=' bg-orange-600 w-full p-3 text-white uppercase font-bold hover:bg-orange-700 transition-all' value={"Agregar Tarea"} />
+        <input type="submit" className=' bg-orange-600 w-full p-3 text-white uppercase font-bold hover:bg-orange-700 transition-all' value={tarea.id ? "Editar Tarea" : "Agregar Tarea"} />
       </form>
     </div>
   )
